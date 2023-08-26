@@ -1,0 +1,38 @@
+---
+import fetchApi from '../../lib/strapi';
+import type Language from '../../interfaces/language'
+import {Debug} from 'astro/components'
+ 
+
+export async function getStaticPaths(){
+  const languages= await fetchApi<Language[]>({
+    endpoint: 'languages',
+    wrappedByKey: 'data',
+  });
+
+    const routes=languages.map((language) => {
+           const endpoint={
+            params:{language:''}
+           } 
+           endpoint.params.language=language.attributes.slug
+            // `{params: {language:${language.attributes.slug}`})
+   return endpoint})
+              
+    return routes
+}
+// const routes=getStaticPaths()
+const {language}=Astro.params;
+---
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Language | {language}</title>
+  </head>
+
+  <body>
+    <main>
+      <p> This is the {language} page</p>
+    
+    </main>
+  </body>
+</html>
