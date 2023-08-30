@@ -1,6 +1,6 @@
 ---
-import fetchApi from '../../lib/strapi';
-import type Language from '../../interfaces/language'
+import fetchApi from '../../../lib/strapi';
+import type Language from '../../../interfaces/language'
 import {Debug} from 'astro/components'
  
 
@@ -18,15 +18,15 @@ export async function getStaticPaths(){
             // `{params: {language:${language.attributes.slug}`})
    return endpoint})
               
-    return routes
+   return routes
 }
-// const routes=getStaticPaths()
+// const routes=await getStaticPaths()
 const {language}=Astro.params;
 const url = new URL(`${import.meta.env.STRAPI_URL}/api/${language}s`);
 let res=await fetch(url.toString())
 res=await res.json();
 const words=res.data;
-console.log(words)
+// console.log(routes)
 
 ---
 <!DOCTYPE html>
