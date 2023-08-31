@@ -1,4 +1,5 @@
 ---
+
 export const getStaticPaths = async () => {
   //  console.log(url)
   // let routes=[];
@@ -43,6 +44,18 @@ export const getStaticPaths = async () => {
 };
 
 const { word } = Astro.params;
+const currentPath = Astro.url.pathname;
+const splitPaths=currentPath.split("/")
+const wordURL= new URL(`${import.meta.env.STRAPI_URL}/api/slugify/slugs/${splitPaths[2]}/${word.toLowerCase()}`).toString()
+let wordInfo = await ( await fetch(wordURL)).json();
+wordInfo={...wordInfo.data.attributes}
+// console.log(wordInfo)
+
 ---
 
+<p>Current path: <span>{currentPath}</span></p>
+<p>Endpoint: <span>{wordURL}</span></p>
+
 <h1>{word}</h1>
+<p>Meaning: <span>{wordInfo.meaning}</span></p>
+<p>Example: <span>{wordInfo.Example}</span></p>
