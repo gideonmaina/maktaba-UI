@@ -1,47 +1,45 @@
 ---
 export const getStaticPaths = async () => {
   //  console.log(url)
+  // let routes=[];
   let paths = [];
-  try {
 
-    const endpoint = {
-      params: { language: "", word: "" },
-    };
+  try {
     const url = new URL(`${import.meta.env.STRAPI_URL}/api/languages`);
     const response = await fetch(url.toString());
     const result = await response.json();
     const languages = result.data;
-    languages.forEach(async (obj) => {
-      const language = obj.attributes.slug;
-      // console.log(`language: ${language}`)
+
+    for (const obj of languages) {
+      const language = obj.attributes.slug
+        ? obj.attributes.slug
+        : obj.attributes.Language;
+
       const url = new URL(`${import.meta.env.STRAPI_URL}/api/${language}s`);
       const response = await fetch(url.toString());
       const result = await response.json();
       const words = result.data;
-
-      words.forEach((obj) => {
+      //console.log(words)
+      for await (const obj of words) {
+        // wait for loop to finish
+        // console.error("Word object")
+        //  console.log(obj)
+        const endpoint = {
+          params: { language: "", word: "" },
+        };
         const word = obj.attributes.word;
         // console.log(word)
         endpoint.params.language = language;
         endpoint.params.word = word;
-        // console.log(endpoint)
-        paths.push(endpoint);
-        
-      });
-      console.log(paths)
-    });
-    
-    
-    
+        //console.log(endpoint)
+        paths.push({ ...endpoint });
+      }
+    }
   } catch (error) {
     console.log(error.message);
-    
   }
+  //console.log(paths)
   return paths;
-  //  console.log(languages)
-  // return [
-  //   {params:{language:"kalenjin",word:"Anyone"}}
-  // ];
 };
 
 const { word } = Astro.params;
