@@ -19,21 +19,26 @@ export const getStaticPaths = async () => {
       const url = new URL(`${import.meta.env.STRAPI_URL}/api/${language}s`);
       const response = await fetch(url.toString());
       const result = await response.json();
-      const words = result.data;
-      //console.log(words)
-      for await (const obj of words) {
-        // wait for loop to finish
-        // console.error("Word object")
-        //  console.log(obj)
-        const endpoint = {
-          params: { language: "", word: "" },
-        };
-        const word = obj.attributes.word;
-        // console.log(word)
-        endpoint.params.language = language;
-        endpoint.params.word = word;
-        //console.log(endpoint)
-        paths.push({ ...endpoint });
+      
+      if(result.data) {
+        const words = result.data;
+        //console.log(words)
+        for await (const obj of words) {
+          // wait for loop to finish
+          // console.error("Word object")
+          //  console.log(obj)
+          if(obj.attributes) {
+            const endpoint = {
+              params: { language: "", word: "" },
+            };
+            const word = obj.attributes.word;
+            // console.log(word)
+            endpoint.params.language = language;
+            endpoint.params.word = word;
+            //console.log(endpoint)
+            paths.push({ ...endpoint });
+          }
+        }
       }
     }
   } catch (error) {
@@ -47,16 +52,31 @@ const { word } = Astro.params;
 const currentPath = Astro.url.pathname;
 const splitPaths=currentPath.split("/")
 const wordURL= new URL(`${import.meta.env.STRAPI_URL}/api/slugify/slugs/${splitPaths[2]}/${word.toLowerCase()}`).toString()
-let wordInfo = await ( await fetch(wordURL)).json();
-wordInfo={...wordInfo.data.attributes}
-// console.log(wordInfo)
+const response = await ( await fetch(wordURL)).json();
+let wordInfo=null
+if(response.data && "attributes" in response.data){ 
+
+  wordInfo={...response.data.attributes} 
+}
+// else{
+//   wordInfo={
+//     meanging:"not found",
+//     Example:"not found"
+
+//   }
+// }
+//console.log(`wordInfo: ${wordInfo}`)
 
 ---
 <Main>
 <p>Current path: <span>{currentPath}</span></p>
 <p>Endpoint: <span>{wordURL}</span></p>
+{wordInfo &&
 
-<h1>{word}</h1>
-<p>Meaning: <span>{wordInfo.meaning}</span></p>
-<p>Example: <span>{wordInfo.Example}</span></p>
+  <h1>{word}</h1>
+  <p>Meaning: <span>{wordInfo.meaning}</span></p>
+  <p>Example: <span>{wordInfo.Example}</span></p>
+}
+
+
 </Main>

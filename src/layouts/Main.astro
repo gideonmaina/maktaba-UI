@@ -1,0 +1,65 @@
+<main>
+    <aside> 
+        <p>This section will be used for advertisements</p>
+    </aside>
+    
+    <div class="content">
+        <article>
+            <slot></slot>
+        </article>
+    </div>
+    <aside>
+        <p> Additional Info</p>
+        <p>Anouncements</p>
+        <p>advertisements </p>
+    </aside>
+</main>
+
+
+<style lang="scss">
+    main{
+        display:flex;
+        background-color: rgba(160, 161, 161, 0.02);
+        padding:0px 4px;
+        justify-content: center;
+        align-content:center;
+        gap: 1rem;
+        margin:0 10%;
+      }
+      .content{
+        flex-grow:2;
+        border:1px solid green;
+        padding:1px;
+        flex-basis:40%;
+
+                            ul{
+                            list-style: none;
+                            padding:0
+                        }
+                        ul li{
+                            display:flex;
+                            flex-direction: column;
+                            line-height: 1.5rem;
+                        
+                        }
+
+                a{
+                color:teal;
+                text-decoration: none;
+                
+                }
+                a::after{
+                    content:'»' ;
+                
+                }
+                a:hover::after{
+                    padding-left: 2px;
+                }
+    }
+    aside{
+        flex-grow:1;
+        flex-shrink:2;
+        padding:1px;
+        border:1px solid red;
+      }
+</style>

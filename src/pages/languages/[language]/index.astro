@@ -1,4 +1,5 @@
 ---
+import Main from '../../../layouts/Main.astro';
 import fetchApi from '../../../lib/strapi';
 import type Language from '../../../interfaces/language'
 import {Debug} from 'astro/components'
@@ -36,42 +37,30 @@ const words=res.data;
   </head>
 
   <body>
-    <main>
-      <div class="content">
-        <h1>{language} words list</h1>
-          <ul>
-            <li>
-              {
-                words.map(word=>(
-                  <a href={`${word.attributes.word}`} >
-                    {word.attributes.word}
-                  </a>
-                  )
-                )
-                
-               }
-            <li/>
-          </ul>
-      </div>
-      </main>
+    
+  <Main>
+    
+       <h1>{language} words list</h1>
+         <ul>
+           <li>
+             {
+               words.map(word=>(
+                 <a href={`${word.attributes.word}`} >
+                   {word.attributes.word}
+                 </a>
+                 )
+               )
+    
+              }
+           <li/>
+         </ul>
+  </Main>
+   
+     
   </body>
 </html>
-<style>
-  main{
-      display:flex;
-      justify-content: center;
-      align-content: center;
-  }
+<!-- <style>
 
-  .content{
-      box-sizing: border-box;
-      padding:4rem 8rem;
-      border-left:1px solid sandybrown;
-      border-right:1px solid sandybrown;
-      background-color: rgba(4, 130, 126, 0.1);
-      height:100vh;
-      width:40vw;
-  }
 
   h1{
       font-size:large;
@@ -100,4 +89,4 @@ const words=res.data;
   a:hover::after{
       padding-left: 2px;
   }
-</style>
+</style> -->
