@@ -1,4 +1,6 @@
 ---
+import BaseHTML from '../../layouts/BaseHTML.astro';
+import HeadTag from '../../components/HeadTag.astro';
 import fetchApi from '../../lib/strapi';
 import type Language from '../../interfaces/language'
 import {Debug} from 'astro/components'
@@ -13,7 +15,7 @@ import Main from '../../layouts/Main.astro';
 
 
 ---
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8">
@@ -21,34 +23,30 @@ import Main from '../../layouts/Main.astro';
     <title>Languages</title>
   </head>
 
-  <body>
-    <main>
-      <!-- <Debug {routes}/> -->
+  <body> -->
+    <BaseHTML>
+      <HeadTag>
+        <title>Languages</title>
+      </HeadTag>
+      <main>
+        <!-- <Debug {routes}/> -->
       
       
-        <Main>
-          <h1> Browse through the list of available languages</h1>
-            <ul>
-              <li>
-              {
-                languages.map((language) => (
-                  <a href={`/languages/${language.attributes.slug}/`}>
-                    {language.attributes.Language}
-                  </a>
-                ))
-              }
-              <li/>
-            </ul>
-        </Main>
-    </main>
-  </body>
-</html>
+          <Main>
+            <h1> Browse through the list of available languages</h1>
+              <ul>
+                <li>
+                {
+                  languages.map((language) => (
+                    <a href={`/languages/${language.attributes.slug}/`}>
+                      {language.attributes.Language}
+                    </a>
+                  ))
+                }
+                <li/>
+              </ul>
+          </Main>
+      </main>
+    </BaseHTML>
+ 
 
-<style>
-  
-    h1{
-        font-size:large;
-    }
-    
-    
-</style>

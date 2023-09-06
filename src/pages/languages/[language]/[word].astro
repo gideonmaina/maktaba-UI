@@ -1,4 +1,6 @@
 ---
+import BaseHTML from '../../../layouts/BaseHTML.astro';
+import HeadTag from '../../../components/HeadTag.astro';
 import Main from "../../../layouts/Main.astro"
 export const getStaticPaths = async () => {
   //  console.log(url)
@@ -68,15 +70,18 @@ if(response.data && "attributes" in response.data){
 //console.log(`wordInfo: ${wordInfo}`)
 
 ---
-<Main>
-<p>Current path: <span>{currentPath}</span></p>
-<p>Endpoint: <span>{wordURL}</span></p>
-{wordInfo &&
-
-  <h1>{word}</h1>
-  <p>Meaning: <span>{wordInfo.meaning}</span></p>
-  <p>Example: <span>{wordInfo.Example}</span></p>
-}
-
-
-</Main>
+<BaseHTML>
+  <title>{word}</title>
+  <Main>
+  <p>Current path: <span>{currentPath}</span></p>
+  <p>Endpoint: <span>{wordURL}</span></p>
+  {wordInfo &&
+  
+    <h1>{word}</h1>
+    <p>Meaning: <span>{wordInfo.meaning}</span></p>
+    <p>Example: <span>{wordInfo.Example}</span></p>
+  }
+  
+  
+  </Main>
+</BaseHTML>

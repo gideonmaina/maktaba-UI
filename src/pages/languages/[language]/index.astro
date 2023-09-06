@@ -1,4 +1,6 @@
 ---
+import BaseHTML from '../../../layouts/BaseHTML.astro';
+import HeadTag from '../../../components/HeadTag.astro';
 import Main from '../../../layouts/Main.astro';
 import fetchApi from '../../../lib/strapi';
 import type Language from '../../../interfaces/language'
@@ -30,65 +32,31 @@ const words=res.data;
 // console.log(routes)
 
 ---
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Language | {language}</title>
-  </head>
 
-  <body>
+
+   
+  <BaseHTML>
+    <HeadTag>
+      <title>Language | {language}</title>
+    </HeadTag>
+    <Main>
     
-  <Main>
-    
-       <h1>{language} words list</h1>
-         <ul>
-           <li>
-             {
-               words.map(word=>(
-                 <a href={`${word.attributes.word}`} >
-                   {word.attributes.word}
-                 </a>
+         <h1>{language} words list</h1>
+           <ul>
+             <li>
+               {
+                 words.map(word=>(
+                   <a href={`${word.attributes.word}`} >
+                     {word.attributes.word}
+                   </a>
+                   )
                  )
-               )
     
-              }
-           <li/>
-         </ul>
-  </Main>
+                }
+             <li/>
+           </ul>
+    </Main>
+  </BaseHTML>
    
      
-  </body>
-</html>
-<!-- <style>
-
-
-  h1{
-      font-size:large;
-  }
-  
-  ul{
-      list-style: none;
-      padding:0
-  }
-  ul li{
-      display:flex;
-      flex-direction: column;
-      line-height: 1.5rem;
-     
-  }
-
-  a{
-   color:teal;
-   text-decoration: none;
-  
-  }
-  a::after{
-      content:'»' ;
-     
-  }
-  a:hover::after{
-      padding-left: 2px;
-  }
-</style> -->
+ 
