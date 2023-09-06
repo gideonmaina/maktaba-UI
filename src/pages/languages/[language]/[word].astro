@@ -73,15 +73,29 @@ if(response.data && "attributes" in response.data){
 <BaseHTML>
   <title>{word}</title>
   <Main>
-  <p>Current path: <span>{currentPath}</span></p>
-  <p>Endpoint: <span>{wordURL}</span></p>
-  {wordInfo &&
+    <p>Current path: <span>{currentPath}</span></p>
+    <p>Endpoint: <span>{wordURL}</span></p>
+    {wordInfo &&
+    <div class="word-container">
+
   
     <h1>{word}</h1>
     <p>Meaning: <span>{wordInfo.meaning}</span></p>
     <p>Example: <span>{wordInfo.Example}</span></p>
   }
+    </div>
   
   
   </Main>
 </BaseHTML>
+
+<style>
+  .word-container{
+    box-shadow: 12px 10px 55px -8px rgba(0,0,0,0.3);
+    padding:1rem;
+    display:flex;
+    flex-direction:column;
+    
+
+  }
+</style>
