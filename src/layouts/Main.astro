@@ -16,14 +16,22 @@
 </main>
 
 <style lang="scss" is:global>
+    @import "../styles/breakpoints.scss";
     main{
         display:flex;
+        flex-direction: column;
         background-color: rgba(160, 161, 161, 0.02);
         padding:0px 4px;
         justify-content: center;
         align-content:center;
         gap: 1rem;
-        margin:0 10%;
+        margin:0 2px;
+        @include devices(desktop){
+          flex-direction: row;
+        //   background-color:red;
+          margin:0 10%;
+          
+        }
       }
      .content{
         flex-grow:2;
@@ -62,3 +70,4 @@
         border:1px solid red;
       }
 </style>
+
