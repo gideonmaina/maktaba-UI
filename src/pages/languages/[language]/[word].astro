@@ -53,7 +53,7 @@ export const getStaticPaths = async () => {
 const { word } = Astro.params;
 const currentPath = Astro.url.pathname;
 const splitPaths=currentPath.split("/")
-const wordURL= new URL(`${import.meta.env.STRAPI_URL}/api/slugify/slugs/${splitPaths[2]}/${word.toLowerCase()}`).toString()
+const wordURL= new URL(`${import.meta.env.STRAPI_URL}/api/slugify/slugs/${splitPaths[2]}/${word.toLowerCase()}?populate=*`).toString()
 const response = await ( await fetch(wordURL)).json();
 let wordInfo=null
 if(response.data && "attributes" in response.data){ 
@@ -67,8 +67,8 @@ if(response.data && "attributes" in response.data){
 
 //   }
 // }
-//console.log(`wordInfo: ${wordInfo}`)
-
+// console.log(`wordInfo: ${wordInfo}`)
+console.log(response.data)
 ---
 <BaseHTML>
   <title>{word}</title>
