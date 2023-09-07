@@ -51,7 +51,7 @@ export const getStaticPaths = async () => {
 const { word } = Astro.params;
 const currentPath = Astro.url.pathname;
 const splitPaths=currentPath.split("/")
-const wordURL= new URL(`${import.meta.env.STRAPI_URL}/api/slugify/slugs/${splitPaths[2]}/${word.toLowerCase()}`).toString()
+const wordURL= new URL(`${import.meta.env.STRAPI_URL}/api/slugify/slugs/${splitPaths[2]}/${word.toLowerCase()}?populate=*`).toString()
 const response = await ( await fetch(wordURL)).json();
 let wordInfo=null
 if(response.data && "attributes" in response.data){ 
@@ -65,8 +65,8 @@ if(response.data && "attributes" in response.data){
 
 //   }
 // }
-//console.log(`wordInfo: ${wordInfo}`)
-
+// console.log(`wordInfo: ${wordInfo}`)
+console.log(response.data)
 ---
 <Main>
 <p>Current path: <span>{currentPath}</span></p>
@@ -74,8 +74,8 @@ if(response.data && "attributes" in response.data){
 {wordInfo &&
 
   <h1>{word}</h1>
-  <p>Meaning: <span>{wordInfo.meaning}</span></p>
-  <p>Example: <span>{wordInfo.Example}</span></p>
+  <p>Meaning: <span>{wordInfo.meaning?wordInfo.meaning:wordInfo.direct_translation}</span></p>
+  <p>Example: <span>{wordInfo.Example?wordInfo.Example:wordInfo.sentence_examples[0].example_in_sentence}</span></p>
 }
 
 
