@@ -79,7 +79,7 @@ if(response.data && "attributes" in response.data){
     <div class="word-container">
 
     <!-- ToDo: Prioritize using Kikuku schema -->
-    <h1>{word}</h1>
+    <h1 class="word-title">{word}</h1>
     <h2>Meaning: <span>{wordInfo.meaning?wordInfo.meaning:wordInfo.direct_translation}</span></h2>
     <h2>Example: <span>{wordInfo.Example?wordInfo.Example:wordInfo.sentence_examples[0].example_in_sentence}</span></h2>
     <h2>Definition(s):</h2>
@@ -94,14 +94,14 @@ if(response.data && "attributes" in response.data){
       ))
   }
     </ol>
-    <h2>Examples(s):</h2>
+    <h2>Example(s):</h2>
     <ol>
       {
     wordInfo.sentence_examples.map(example=>(
       
      <li>
         <p>{example.example_in_sentence}</p>
-        <p>Translation: {example.english_translation}</p>
+        <p class="translation">Translation: {example.english_translation}</p>
       </li>
       ))
   }
@@ -119,12 +119,38 @@ if(response.data && "attributes" in response.data){
     padding:1rem;
     display:flex;
     flex-direction:column;
+    gap:0.75rem;
    
-    
+   
     h2{
       font-size:medium;
       font-weight: normal;  
     }
+    
+    ol{
+      list-style: display;
+      margin-left: 2rem;
+      li{
+        p{
+          margin-top:5px;
+        }
+      }
+  }
+
+  .translation{
+    font-style: italic;
+    font-size:400;
+    font-weight: bold;
+  }
+  sup{
+    color:teal;
+    margin-left: 0.2rem;
+  }
+  }
+
+
+  .word-title{
+    font-family:'Playfair Display', sans-serif;
   }
 
 </style>
