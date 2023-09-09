@@ -75,13 +75,18 @@ if(response.data && "attributes" in response.data){
   <Main>
     <p>Current path: <span>{currentPath}</span></p>
     <p>Endpoint: <span>{wordURL}</span></p>
-    {wordInfo &&
+    {wordInfo && // Only display word information if response data is not null
     <div class="word-container">
 
     <!-- ToDo: Prioritize using Kikuku schema -->
     <h1 class="word-title">{word}</h1>
-    <h2>Meaning: <span>{wordInfo.meaning?wordInfo.meaning:wordInfo.direct_translation}</span></h2>
-    <h2>Example: <span>{wordInfo.Example?wordInfo.Example:wordInfo.sentence_examples[0].example_in_sentence}</span></h2>
+    
+    <div>
+      <h2>Meaning:</h2> <p>{wordInfo.meaning?wordInfo.meaning:wordInfo.direct_translation}</p>
+    </div>
+    <div>
+      <h2>Example:</h2> <p>{wordInfo.Example?wordInfo.Example:wordInfo.sentence_examples[0].example_in_sentence}</p>
+    </div>
     <h2>Definition(s):</h2>
     <ol>
       {
@@ -106,7 +111,16 @@ if(response.data && "attributes" in response.data){
       ))
   }
     </ol>
-  }
+  
+
+    <div>
+      <h2><em>Plural:</em></h2><p>{wordInfo.plural}</p>
+      </div>
+      <h2><em>Synonyms</em></h2>
+      {
+        wordInfo.synonyms.map(synonym=>(<p>{synonym}</p>))
+      
+      }
     </div>
   
   
@@ -119,8 +133,12 @@ if(response.data && "attributes" in response.data){
     padding:1rem;
     display:flex;
     flex-direction:column;
-    gap:0.75rem;
+    gap:0.5rem;
    
+    div{
+      display:flex;
+      gap:0.75rem;
+    }
    
     h2{
       font-size:medium;
@@ -151,6 +169,8 @@ if(response.data && "attributes" in response.data){
 
   .word-title{
     font-family:'Playfair Display', sans-serif;
+    font-weight: bolder;
+    font-size:48px;
   }
 
 </style>
