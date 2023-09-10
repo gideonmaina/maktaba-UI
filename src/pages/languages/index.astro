@@ -1,6 +1,6 @@
 ---
 import BaseHTML from '../../layouts/BaseHTML.astro';
-import HeadTag from '../../components/HeadTag.astro';
+import MetaTag from '../../components/MetaTag.astro';
 import fetchApi from '../../lib/strapi';
 import type Language from '../../interfaces/language'
 import {Debug} from 'astro/components'
@@ -15,19 +15,11 @@ import Main from '../../layouts/Main.astro';
 
 
 ---
-<!-- <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Languages</title>
-  </head>
 
-  <body> -->
     <BaseHTML>
-      <HeadTag>
-        <title>Languages</title>
-      </HeadTag>
+        <meta name="description" content="List of available African languages" slot="head"/>
+        <title slot="title">Languages</title>
+     
       <main>
         <!-- <Debug {routes}/> -->
       

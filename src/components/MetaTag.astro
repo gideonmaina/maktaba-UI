@@ -1,0 +1,20 @@
+---
+const {metas_of_type_name}=Astro.props;
+let metaentries=[]
+if(metas_of_type_name && Object.keys(metas_of_type_name).length>0) metaentries=Object.entries(metas_of_type_name)
+---
+<!-- Meta name -->
+    
+        <slot name="name_meta">
+            {metaentries &&
+        
+              metaentries.map(([name,content]=metag)=>(
+              <meta name={name} content={content} />
+        
+             )
+               )
+            }
+        </slot>
+        
+        
+    

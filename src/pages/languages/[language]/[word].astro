@@ -1,7 +1,8 @@
 ---
 import BaseHTML from '../../../layouts/BaseHTML.astro';
-import HeadTag from '../../../components/HeadTag.astro';
+import MetaTag from '../../../components/MetaTag.astro';
 import Main from "../../../layouts/Main.astro"
+import { Debug } from 'astro:components';
 export const getStaticPaths = async () => {
   //  console.log(url)
   // let routes=[];
@@ -56,9 +57,18 @@ const splitPaths=currentPath.split("/")
 const wordURL= new URL(`${import.meta.env.STRAPI_URL}/api/slugify/slugs/${splitPaths[2]}/${word.toLowerCase()}?populate=*`).toString()
 const response = await ( await fetch(wordURL)).json();
 let wordInfo=null
+let metanames={
+  description:"",
+  created:"",
+  updated:""
+}
 if(response.data && "attributes" in response.data){ 
 
   wordInfo={...response.data.attributes} 
+  metanames.description=wordInfo.direct_translation,
+  metanames.created=wordInfo.createdAt,
+  metanames.updated=wordInfo.updatedAt
+
 }
 // else{
 //   wordInfo={
@@ -69,12 +79,31 @@ if(response.data && "attributes" in response.data){
 // }
 // console.log(`wordInfo: ${wordInfo}`)
 //console.log(response.data)
+
+const canonicalURL = Astro.url;
+console.log(canonicalURL)
+
+
+
+
+
 ---
+
+
+
 <BaseHTML>
-  <title>{word}</title>
+  <!-- Import MetaTag compent and insert it to head slot of base layout -->
+
+  <MetaTag metas_of_type_name={metanames} slot="head"/>
+  
+ <title slot="title">{word}</title>
+  <Debug>
+  {canonicalURL}
+  </Debug>
+    
   <Main>
-    <p>Current path: <span>{currentPath}</span></p>
-    <p>Endpoint: <span>{wordURL}</span></p>
+    <!-- <p>Current path: <span>{currentPath}</span></p>
+    <p>Endpoint: <span>{wordURL}</span></p> -->
     {wordInfo && // Only display word information if response data is not null
     <div class="word-container">
 
@@ -116,11 +145,13 @@ if(response.data && "attributes" in response.data){
     <div>
       <h2><em>Plural:</em></h2><p>{wordInfo.plural}</p>
       </div>
-      <h2><em>Synonyms</em></h2>
-      {
-        wordInfo.synonyms.map(synonym=>(<p>{synonym}</p>))
-      
-      }
+      <div>
+        <h2><em>Synonyms</em></h2>
+        {
+          wordInfo.synonyms.map(synonym=>(<p>{synonym}</p>))
+        
+        }
+      </div>
     </div>
   
   

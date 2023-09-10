@@ -1,6 +1,6 @@
 ---
 import BaseHTML from '../../../layouts/BaseHTML.astro';
-import HeadTag from '../../../components/HeadTag.astro';
+import MetaTag from '../../../components/MetaTag.astro';
 import Main from '../../../layouts/Main.astro';
 import fetchApi from '../../../lib/strapi';
 import type Language from '../../../interfaces/language'
@@ -36,9 +36,10 @@ const words=res.data;
 
    
   <BaseHTML>
-    <HeadTag>
-      <title>Language | {language}</title>
-    </HeadTag>
+      
+      <meta name="description" content=`List of words found in ${language} language` slot="head"/>
+      <title slot="title">Language | {language}</title>
+ 
     <Main>
     
          <h1>{language} words list</h1>
