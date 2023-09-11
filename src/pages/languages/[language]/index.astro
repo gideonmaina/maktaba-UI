@@ -30,7 +30,8 @@ let res=await fetch(url.toString())
 res=await res.json();
 const words=res.data;
 // console.log(routes)
-
+const currentUrl=Astro.url.pathname;
+// console.log(currentUrl)
 ---
 
 
@@ -47,9 +48,9 @@ const words=res.data;
              <li>
                {
                  words.map(word=>(
-                   <a href={`${word.attributes.word}`} >
+                   <a href={`${currentUrl}/${word.attributes.word}`} >
                      {word.attributes.word}
-                   </a>
+                   </a> 
                    )
                  )
     

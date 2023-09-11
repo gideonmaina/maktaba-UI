@@ -1,0 +1,55 @@
+---
+const {currentPath}=Astro.props; // with trailing '/'  e.g /languages/kikuyu/andu
+const getBreadcrumbs=(path)=>{
+    const splitPath=path.split('/'); // e.g. result : [ '' ,'languages', 'kikuyu', 'andu']
+    
+    let breadcrumbs=[]
+
+    // ToDo: Test performance of option one vs option two 
+
+    //OPTION ONE
+
+    /*** 
+    for(let i=1;i<splitPath.length-1;i++){ // stop until where the first path preceeding the trailing '/' i.e ['', 'first_path', 'second_path' , ...]
+        const breadcrumb=splitPath.slice(0,-i).join("/"); //slice for the reverse indices
+        breadcrumbs.push(breadcrumb)
+
+    }
+    ****/
+
+    //OPTION TWO
+    while(splitPath.length>2){ // stop until where the first path preceeding the trailing '/' at index 1 i.e ['', 'first_path', 'second_path' , ...]
+    splitPath.pop()
+    breadcrumbs.push(splitPath.join('/'))
+    }
+    
+    return breadcrumbs
+}
+
+const breadcrumbs=getBreadcrumbs(currentPath).reverse();
+// console.log(breadcrumbs)
+---
+
+
+
+<div>
+ {
+    breadcrumbs &&
+    breadcrumbs.map(breadcrumb=>(
+        
+        <a href={breadcrumb}>{breadcrumb.split('/').pop()}</a>
+    ))
+ }
+
+ <!-- {breadcrumbs} -->
+
+
+</div>
+<style>
+    div{
+        display:flex;
+        justify-content: center;
+        align-content:center;
+        gap:2rem;
+    }
+</style>
